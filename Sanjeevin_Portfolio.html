@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sanjeevin J — AI & ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & BASE ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c10;
+  --bg2:#0e1318;
+  --bg3:#141a21;
+  --card:#111820;
+  --border:#1e2d3d;
+  --accent:#00d4ff;
+  --accent2:#7c3aed;
+  --green:#00e5a0;
+  --text:#e2eaf4;
+  --muted:#6b8299;
+  --mono:'Space Mono',monospace;
+  --sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px}
+
+/* ─── GRID BACKGROUND ─── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;
+  opacity:.3;pointer-events:none;z-index:0;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 5%;
+  background:rgba(8,12,16,.85);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:var(--mono);font-size:.9rem;color:var(--accent);letter-spacing:.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.85rem;font-weight:500;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{
+  font-family:var(--mono);font-size:.78rem;padding:.45rem 1.1rem;
+  border:1px solid var(--accent);color:var(--accent);
+  background:transparent;text-decoration:none;
+  transition:all .2s;letter-spacing:.05em;
+}
+.nav-cta:hover{background:var(--accent);color:var(--bg)}
+
+/* ─── SECTIONS ─── */
+section{position:relative;z-index:1;padding:5rem 10%;max-width:1200px;margin:0 auto}
+.section-label{
+  font-family:var(--mono);font-size:.75rem;color:var(--accent);
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;
+}
+.section-title{font-size:2rem;font-weight:600;color:var(--text);margin-bottom:2.5rem}
+.section-title span{color:var(--accent)}
+
+/* ─── HERO ─── */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding-top:6rem;max-width:none;
+  padding-left:10%;padding-right:10%;
+}
+.hero-tag{
+  display:inline-block;font-family:var(--mono);font-size:.75rem;
+  color:var(--green);border:1px solid var(--green);
+  padding:.3rem .8rem;margin-bottom:1.5rem;letter-spacing:.1em;
+}
+.hero-name{
+  font-size:clamp(3rem,8vw,6.5rem);font-weight:600;line-height:1.05;
+  color:var(--text);margin-bottom:.5rem;
+}
+.hero-name .accent{color:var(--accent);display:block}
+.hero-role{
+  font-family:var(--mono);font-size:clamp(.9rem,2vw,1.1rem);
+  color:var(--muted);margin-bottom:1.5rem;
+}
+.hero-desc{max-width:540px;color:#8fa8bf;font-size:1rem;line-height:1.8;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{
+  font-family:var(--mono);font-size:.8rem;padding:.75rem 1.8rem;
+  background:var(--accent);color:var(--bg);font-weight:700;
+  text-decoration:none;letter-spacing:.05em;transition:all .2s;
+}
+.btn-primary:hover{background:var(--green);transform:translateY(-2px)}
+.btn-outline{
+  font-family:var(--mono);font-size:.8rem;padding:.75rem 1.8rem;
+  border:1px solid var(--border);color:var(--text);
+  text-decoration:none;letter-spacing:.05em;transition:all .2s;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-links{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap}
+.hero-link{
+  font-family:var(--mono);font-size:.75rem;color:var(--muted);
+  text-decoration:none;display:flex;align-items:center;gap:.4rem;
+  transition:color .2s;
+}
+.hero-link:hover{color:var(--accent)}
+.hero-link svg{width:14px;height:14px}
+.hero-stats{
+  display:flex;gap:3rem;margin-top:3.5rem;
+  border-top:1px solid var(--border);padding-top:2rem;flex-wrap:wrap;
+}
+.stat-num{font-family:var(--mono);font-size:2rem;font-weight:700;color:var(--accent)}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+
+/* ─── ABOUT ─── */
+#about .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.about-text p{color:#8fa8bf;margin-bottom:1rem;line-height:1.9}
+.about-text p strong{color:var(--text)}
+.about-cards{display:flex;flex-direction:column;gap:1rem}
+.about-card{
+  background:var(--card);border:1px solid var(--border);
+  padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;
+}
+.about-card-icon{font-size:1.4rem;margin-top:.1rem;flex-shrink:0}
+.about-card-title{font-size:.85rem;font-weight:600;color:var(--text);margin-bottom:.2rem}
+.about-card-sub{font-size:.8rem;color:var(--muted)}
+
+/* ─── SKILLS ─── */
+#skills .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.skill-card{background:var(--card);border:1px solid var(--border);padding:1.5rem}
+.skill-card-title{
+  font-family:var(--mono);font-size:.75rem;color:var(--accent);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+.skill-tag{
+  font-size:.78rem;padding:.3rem .7rem;
+  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);
+  color:#a8c8e0;font-family:var(--mono);
+}
+.skill-tag.highlight{
+  background:rgba(0,229,160,.1);border-color:rgba(0,229,160,.3);color:var(--green);
+}
+
+/* ─── EXPERIENCE ─── */
+#experience .exp-list{display:flex;flex-direction:column;gap:1.5rem}
+.exp-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);padding:1.75rem 2rem}
+.exp-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:.5rem;margin-bottom:.3rem}
+.exp-company{font-size:1.05rem;font-weight:600;color:var(--text)}
+.exp-date{font-family:var(--mono);font-size:.75rem;color:var(--accent);padding:.2rem .6rem;border:1px solid var(--border)}
+.exp-role{font-family:var(--mono);font-size:.8rem;color:var(--green);margin-bottom:1rem}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.exp-bullets li{font-size:.88rem;color:#8fa8bf;padding-left:1.2rem;position:relative;line-height:1.7}
+.exp-bullets li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.7rem;top:.3rem}
+.exp-bullets strong{color:var(--text)}
+
+/* ─── PROJECTS ─── */
+#projects .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.proj-card{
+  background:var(--card);border:1px solid var(--border);
+  padding:2rem;display:flex;flex-direction:column;gap:1rem;
+  transition:border-color .2s,transform .2s;
+}
+.proj-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.proj-num{font-family:var(--mono);font-size:.7rem;color:var(--muted)}
+.proj-name{font-size:1.1rem;font-weight:600;color:var(--text)}
+.proj-desc{font-size:.85rem;color:#8fa8bf;line-height:1.8;flex:1}
+.proj-stack{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.proj-tech{font-family:var(--mono);font-size:.7rem;padding:.2rem .55rem;background:var(--bg3);border:1px solid var(--border);color:var(--muted)}
+.proj-links{display:flex;gap:1rem;margin-top:.5rem}
+.proj-link{font-family:var(--mono);font-size:.75rem;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.35rem;transition:color .2s}
+.proj-link:hover{color:var(--green)}
+
+/* ─── EDUCATION ─── */
+#education .edu-list{display:flex;flex-direction:column;gap:1.5rem}
+.edu-card{background:var(--card);border:1px solid var(--border);padding:1.75rem 2rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start}
+.edu-inst{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.25rem}
+.edu-degree{font-family:var(--mono);font-size:.8rem;color:var(--green);margin-bottom:.5rem}
+.edu-detail{font-size:.85rem;color:var(--muted)}
+.edu-badge{font-family:var(--mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);padding:.3rem .7rem;white-space:nowrap;text-align:center}
+.edu-year{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-top:.3rem;text-align:center}
+
+/* ─── CERTIFICATIONS ─── */
+#certifications .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.cert-card{background:var(--card);border:1px solid var(--border);padding:1.25rem 1.5rem;border-top:2px solid var(--accent2)}
+.cert-issuer{font-family:var(--mono);font-size:.7rem;color:var(--accent2);letter-spacing:.08em;margin-bottom:.5rem}
+.cert-name{font-size:.88rem;font-weight:500;color:var(--text);line-height:1.5}
+
+/* ─── ACHIEVEMENTS ─── */
+#achievements .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.ach-card{background:var(--card);border:1px solid var(--border);padding:1.5rem;text-align:center}
+.ach-icon{font-size:1.8rem;margin-bottom:.75rem}
+.ach-num{font-family:var(--mono);font-size:1.5rem;font-weight:700;color:var(--accent);margin-bottom:.4rem}
+.ach-label{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+/* ─── CONTACT ─── */
+#contact{text-align:center}
+#contact .contact-desc{color:var(--muted);max-width:500px;margin:0 auto 2.5rem;font-size:.95rem}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:700px;margin:0 auto 3rem}
+.contact-item{
+  background:var(--card);border:1px solid var(--border);
+  padding:1.25rem;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  transition:border-color .2s,transform .2s;
+}
+.contact-item:hover{border-color:var(--accent);transform:translateY(-2px)}
+.contact-item-label{font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.1em}
+.contact-item-val{font-size:.82rem;color:var(--text);font-weight:500}
+
+/* ─── FOOTER ─── */
+footer{
+  text-align:center;padding:2rem 5%;
+  border-top:1px solid var(--border);
+  font-family:var(--mono);font-size:.75rem;color:var(--muted);
+  position:relative;z-index:1;
+}
+footer span{color:var(--accent)}
+
+/* ─── FADE IN ANIMATION ─── */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:none}
+
+/* ─── MOBILE ─── */
+@media(max-width:768px){
+  nav{padding:1rem 5%}
+  .nav-links{display:none}
+  section{padding:3.5rem 6%}
+  #about .about-grid,#skills .skills-grid,#projects .proj-grid,
+  .cert-grid,.ach-grid,.contact-grid{grid-template-columns:1fr}
+  .edu-card{grid-template-columns:1fr}
+  .hero-stats{gap:2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-logo">sanjeevin.dev</div><!-- EDIT: change to your actual domain if you have one -->
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="mailto:sanjeevin2005@gmail.com">Hire Me</a><!-- EDIT: your email -->
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-tag">Available for Opportunities</div><!-- EDIT: or remove this tag if not available -->
+  <h1 class="hero-name">
+    Sanjeevin J
+    <span class="accent">AI & ML Engineer</span>
+  </h1>
+  <p class="hero-role">// Computer Science Undergraduate · Problem Solver · Builder</p>
+  <p class="hero-desc">
+    Building intelligent systems at the intersection of Machine Learning, NLP, and software development.
+    Passionate about turning data into impactful, real-world solutions.
+  </p>
+  <div class="hero-btns">
+    <a class="btn-primary" href="#projects">View Projects</a>
+    <a class="btn-outline" href="#contact">Get in Touch</a>
+  </div>
+  <div class="hero-links">
+    <a class="hero-link" href="https://github.com/SANJEEVIN2005" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.57v-2c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      github.com/SANJEEVIN2005
+    </a>
+    <a class="hero-link" href="https://linkedin.com/in/sanjeevin-j" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM3.56 20.45h3.56V9H3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
+      linkedin.com/in/sanjeevin-j
+    </a>
+    <a class="hero-link" href="https://leetcode.com/u/sanjeevin2005" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.48 20.6c.37.1.74.14 1.1.14 1.4 0 2.72-.56 3.71-1.56l2.27-2.28a5.23 5.23 0 000-7.4 5.22 5.22 0 00-7.4 0l-1.27 1.27 1.63 1.63 1.27-1.27a2.96 2.96 0 014.14 0 2.96 2.96 0 010 4.14l-2.27 2.27a2.95 2.95 0 01-4.14 0 2.94 2.94 0 01-.82-1.62l-1.74.8a5.2 5.2 0 001.52 3.9zM10.52 3.4c-1.4 0-2.72.56-3.71 1.56L4.54 7.24a5.23 5.23 0 000 7.4 5.22 5.22 0 007.4 0l1.27-1.27-1.63-1.63-1.27 1.27a2.96 2.96 0 01-4.14 0 2.96 2.96 0 010-4.14l2.27-2.27a2.95 2.95 0 014.14 0c.45.44.73 1.01.82 1.62l1.74-.8a5.2 5.2 0 00-1.52-3.9 5.2 5.2 0 00-3.1-1.52z"/></svg>
+      leetcode.com/u/sanjeevin2005
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">200+</div>
+      <div class="stat-label">LeetCode Problems</div>
+    </div>
+    <div>
+      <div class="stat-num">8.3</div>
+      <div class="stat-label">CGPA</div>
+    </div>
+    <div>
+      <div class="stat-num">2</div>
+      <div class="stat-label">Projects Deployed</div>
+    </div>
+    <div>
+      <div class="stat-num">3</div>
+      <div class="stat-label">Internships</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="fade-up">
+    <div class="section-label">01 // About</div>
+    <h2 class="section-title">Who I <span>Am</span></h2>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <p>I'm <strong>Sanjeevin J</strong>, a Computer Science undergraduate at <strong>Dr. MCET, Coimbatore</strong>, specialising in Artificial Intelligence and Machine Learning. I also hold a Major in AI from <strong>IIT Ropar</strong>.</p>
+      <p>I build end-to-end ML systems — from raw data to deployed web applications. My work spans <strong>NLP, text classification, recommendation systems, and API-driven applications</strong>. I believe in writing honest, verifiable code: every project on my portfolio is something I actually built.</p>
+      <p>Beyond academics, I'm a passionate <strong>chess player</strong> — the game sharpens the same analytical thinking I bring to engineering problems. I'm also an avid <strong>reader</strong>, constantly learning beyond the syllabus.</p>
+      <p>Currently seeking <strong>placement opportunities</strong> where I can contribute to real-world AI/ML products and grow as an engineer.</p>
+    </div>
+    <div class="about-cards">
+      <div class="about-card">
+        <div class="about-card-icon">🎓</div>
+        <div>
+          <div class="about-card-title">B.E. Computer Science & Engineering</div>
+          <div class="about-card-sub">Dr. MCET, Coimbatore · 2023–2027 · CGPA 8.3</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🤖</div>
+        <div>
+          <div class="about-card-title">Major in Artificial Intelligence</div>
+          <div class="about-card-sub">IIT Ropar (Online Programme) · 2024–2026</div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">📍</div>
+        <div>
+          <div class="about-card-title">Location</div>
+          <div class="about-card-sub">Coimbatore, Tamil Nadu, India</div><!-- EDIT: update if needed -->
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">♟️</div>
+        <div>
+          <div class="about-card-title">Interests</div>
+          <div class="about-card-sub">Chess · Reading · Competitive Coding</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section id="skills">
+  <div class="fade-up">
+    <div class="section-label">02 // Skills</div>
+    <h2 class="section-title">Technical <span>Arsenal</span></h2>
+  </div>
+  <div class="skills-grid fade-up">
+    <div class="skill-card">
+      <div class="skill-card-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Python</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">C</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">AI & Data Science</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Machine Learning</span>
+        <span class="skill-tag highlight">NLP</span>
+        <span class="skill-tag">Deep Learning</span>
+        <span class="skill-tag">TF-IDF</span>
+        <span class="skill-tag">Classification</span>
+        <span class="skill-tag">Regression</span>
+        <span class="skill-tag">Feature Engineering</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Prompt Engineering</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Technologies & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Scikit-learn</span>
+        <span class="skill-tag highlight">Streamlit</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">Matplotlib</span>
+        <span class="skill-tag">NLTK</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Jupyter Notebook</span>
+        <span class="skill-tag">Google Colab</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-title">Core CS</div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">DSA</span>
+        <span class="skill-tag highlight">OOP</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">Version Control</span>
+        <span class="skill-tag">REST API</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ─── -->
+<section id="experience">
+  <div class="fade-up">
+    <div class="section-label">03 // Experience</div>
+    <h2 class="section-title">Where I've <span>Worked</span></h2>
+  </div>
+  <div class="exp-list fade-up">
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-company">TechSaksham – Microsoft & SAP CSR Initiative<br><small style="font-weight:400;color:var(--muted)">Edunet Foundation | AICTE</small></div>
+        <div class="exp-date">Jan 2025</div>
+      </div>
+      <div class="exp-role">// AI Intern</div>
+      <ul class="exp-bullets">
+        <li>Built an <strong>SMS Spam Detection</strong> system using <strong>supervised Machine Learning</strong> and <strong>TF-IDF vectorization</strong>, achieving <strong>95%+ classification accuracy</strong> on a dataset of 5,500+ messages.</li>
+        <li>Implemented a complete <strong>ML pipeline</strong>: data preprocessing, feature engineering, <strong>Naive Bayes</strong> training, and evaluation using precision, recall, and F1-score.</li>
+        <li>Deployed a real-time prediction interface using <strong>Streamlit</strong> enabling instant spam/ham classification.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-company">Altruisty</div>
+        <div class="exp-date">Dec 2024 – Feb 2025</div>
+      </div>
+      <div class="exp-role">// AI & ML Intern</div>
+      <ul class="exp-bullets">
+        <li>Completed a structured 2-month internship focused on <strong>Artificial Intelligence and Machine Learning</strong> fundamentals and applied techniques.</li>
+        <li>Studied and applied core ML concepts including <strong>classification, regression, data preprocessing</strong>, and model evaluation in a real organisational setting.</li>
+        <li>Recognised for <strong>performance and commitment</strong> throughout the internship tenure.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section id="projects">
+  <div class="fade-up">
+    <div class="section-label">04 // Projects</div>
+    <h2 class="section-title">Things I've <span>Built</span></h2>
+  </div>
+  <div class="proj-grid fade-up">
+
+    <div class="proj-card">
+      <div class="proj-num">Project 01</div>
+      <div class="proj-name">SMS Spam Detection System</div>
+      <div class="proj-desc">
+        A supervised ML model for SMS spam classification using NLTK for text preprocessing and TF-IDF vectorization for feature extraction. Trained a Naive Bayes classifier achieving <strong>95%+ accuracy</strong> on 5,500+ messages. Deployed as a real-time Streamlit web app.
+      </div>
+      <div class="proj-stack">
+        <span class="proj-tech">Python</span>
+        <span class="proj-tech">Scikit-learn</span>
+        <span class="proj-tech">NLTK</span>
+        <span class="proj-tech">TF-IDF</span>
+        <span class="proj-tech">Pandas</span>
+        <span class="proj-tech">NumPy</span>
+        <span class="proj-tech">Streamlit</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link" href="https://github.com/SANJEEVIN2005/Sms_Span_detection" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.57v-2c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-num">Project 02</div>
+      <div class="proj-name">AI-Powered Job Recommender System</div>
+      <div class="proj-desc">
+        A live job recommendation system fetching real-time listings from <strong>Adzuna API</strong> with JSearch API (RapidAPI) as fallback, surfacing 500+ job results per query. Features a PDF resume parser to extract skills automatically and a career guidance engine for personalised interview tips.
+      </div>
+      <div class="proj-stack">
+        <span class="proj-tech">Python</span>
+        <span class="proj-tech">Streamlit</span>
+        <span class="proj-tech">Adzuna API</span>
+        <span class="proj-tech">RapidAPI</span>
+        <span class="proj-tech">PDF Parsing</span>
+        <span class="proj-tech">NLP</span>
+        <span class="proj-tech">JSON</span>
+      </div>
+      <div class="proj-links">
+        <a class="proj-link" href="https://github.com/SANJEEVIN2005/AI-Powered-Job-Recommender-System" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.57v-2c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── EDUCATION ─── -->
+<section id="education">
+  <div class="fade-up">
+    <div class="section-label">05 // Education</div>
+    <h2 class="section-title">Academic <span>Background</span></h2>
+  </div>
+  <div class="edu-list fade-up">
+
+    <div class="edu-card">
+      <div>
+        <div class="edu-inst">Dr. Mahalingam College of Engineering and Technology (Dr. MCET)</div>
+        <div class="edu-degree">B.E. – Computer Science and Engineering</div>
+        <div class="edu-detail">Coimbatore, Tamil Nadu · 2023 – 2027</div>
+        <div class="edu-detail" style="margin-top:.5rem;color:var(--muted);font-size:.82rem">
+          Relevant Coursework: DSA, OOP, DBMS, Machine Learning, Operating Systems, Computer Networks<br>
+          4-Year Merit Scholarship for academic excellence
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="edu-badge">CGPA<br>8.3/10</div>
+        <div class="edu-year">2023–2027</div>
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <div>
+        <div class="edu-inst">Indian Institute of Technology (IIT), Ropar</div>
+        <div class="edu-degree">Major in Artificial Intelligence</div>
+        <div class="edu-detail">Online Certification Programme · 2024 – 2026</div>
+        <div class="edu-detail" style="margin-top:.5rem;color:var(--muted);font-size:.82rem">
+          Structured AI curriculum under IIT Ropar faculty · Major Certification awarded on completion
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="edu-badge" style="border-color:var(--green);color:var(--green)">IIT<br>Ropar</div>
+        <div class="edu-year">2024–2026</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CERTIFICATIONS ─── -->
+<section id="certifications">
+  <div class="fade-up">
+    <div class="section-label">06 // Certifications</div>
+    <h2 class="section-title">Credentials & <span>Learning</span></h2>
+  </div>
+  <div class="cert-grid fade-up">
+    <div class="cert-card">
+      <div class="cert-issuer">IIT Ropar</div>
+      <div class="cert-name">Major Certification in Artificial Intelligence</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">GeeksforGeeks</div>
+      <div class="cert-name">Data Science Bootcamp – Analyzing Data to Creating ML Models (6 Weeks)</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Infosys Springboard</div>
+      <div class="cert-name">Python Bootcamp · Jan 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Google Cloud · Coursera</div>
+      <div class="cert-name">Introduction to Generative AI</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">Google Cloud · Coursera</div>
+      <div class="cert-name">Introduction to Large Language Models (LLMs)</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-issuer">LeetCode</div>
+      <div class="cert-name">100 Days of Code Badge · 2025 Batch</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ACHIEVEMENTS ─── -->
+<section id="achievements">
+  <div class="fade-up">
+    <div class="section-label">07 // Achievements</div>
+    <h2 class="section-title">Milestones & <span>Recognition</span></h2>
+  </div>
+  <div class="ach-grid fade-up">
+    <div class="ach-card">
+      <div class="ach-icon">🏆</div>
+      <div class="ach-num">200+</div>
+      <div class="ach-label">DSA problems solved on LeetCode with consistent daily practice</div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">🔥</div>
+      <div class="ach-num">100</div>
+      <div class="ach-label">Days of Code streak — LeetCode 2025 batch badge</div>
+    </div>
+    <div class="ach-card">
+      <div class="ach-icon">🎖️</div>
+      <div class="ach-num">4-Yr</div>
+      <div class="ach-label">Merit Scholarship at Dr. MCET for academic excellence</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="fade-up">
+    <div class="section-label">08 // Contact</div>
+    <h2 class="section-title">Let's <span>Connect</span></h2>
+  </div>
+  <p class="contact-desc fade-up">
+    Open to placement opportunities, internships, and collaborations.
+    Feel free to reach out — I respond within 24 hours.
+  </p>
+  <div class="contact-grid fade-up">
+    <a class="contact-item" href="mailto:sanjeevin2005@gmail.com"><!-- EDIT: your email -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      <div class="contact-item-label">EMAIL</div>
+      <div class="contact-item-val">sanjeevin2005@gmail.com</div>
+    </a>
+    <a class="contact-item" href="https://linkedin.com/in/sanjeevin-j" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--accent)"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM3.56 20.45h3.56V9H3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/></svg>
+      <div class="contact-item-label">LINKEDIN</div>
+      <div class="contact-item-val">sanjeevin-j</div>
+    </a>
+    <a class="contact-item" href="https://github.com/SANJEEVIN2005" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.57v-2c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.69.82.57C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      <div class="contact-item-label">GITHUB</div>
+      <div class="contact-item-val">SANJEEVIN2005</div>
+    </a>
+  </div>
+  <div style="margin-top:2rem;fade-up">
+    <a class="btn-primary" href="mailto:sanjeevin2005@gmail.com">Send me an Email →</a><!-- EDIT: your email -->
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>Designed & built by <span>Sanjeevin J</span> · 2025 · All information is accurate and verified</p>
+</footer>
+
+<!-- ─── SCROLL ANIMATION ─── -->
+<script>
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible')}
+  });
+},{threshold:.12});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
